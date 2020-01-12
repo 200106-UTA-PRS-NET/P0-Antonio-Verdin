@@ -9,7 +9,9 @@ namespace PizzaBox
         static void Main(string[] args)
         {
             Pizza pizza = new Pizza();
-            Console.WriteLine(pizza);
+            Pizza pizza2 = new Pizza();
+            pizza.showToppings();
+
         }
     }
 }

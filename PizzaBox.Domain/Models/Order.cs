@@ -6,5 +6,7 @@ namespace PizzaBox.Domain.Models
 {
     class Order
     {
+        int orderID;
+
     }
 }

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PizzaBox.Domain.Models
 {
-    class User
+    class User:Interfaces.IOrder
     {
     }
-}
+    }
+

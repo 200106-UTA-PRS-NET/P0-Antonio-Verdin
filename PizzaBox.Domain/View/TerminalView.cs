@@ -6,5 +6,6 @@ namespace PizzaBox.Domain.View
 {
     class TerminalView
     {
+
     }
 }

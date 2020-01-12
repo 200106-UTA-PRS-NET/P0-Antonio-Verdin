@@ -6,5 +6,6 @@ namespace PizzaBox.Domain.Interfaces
 {
     interface IPizza
     {
+        public double Cost();
     }
 }

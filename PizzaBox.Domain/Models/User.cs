@@ -4,8 +4,12 @@ using System.Text;
 
 namespace PizzaBox.Domain.Models
 {
-    class User:Interfaces.IOrder
+    class User : Interfaces.IOrder
     {
+        public Dictionary<int, string> Return_Orders()
+        {
+            throw new NotImplementedException();
+        }
     }
-    }
+}
 

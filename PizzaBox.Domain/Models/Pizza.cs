@@ -6,14 +6,13 @@ namespace PizzaBox.Domain.Models
 {
      public class Pizza: Interfaces.IPizza
     {
+        private Dictionary<string, double> Toppings = new Dictionary<string, double>();
 
-        Dictionary<string, double> Toppings = new Dictionary<string, double>();
-        string crust = "";
-        string size = "";
-        public Pizza()
+        
+        protected Pizza()
         {
-            addTopping("Red Sauce", 5.00f);
-            addTopping("Cheese", 5.00f);
+            AddTopping("Red Sauce", 5.00f);
+            AddTopping("Cheese", 5.00f);
             Console.WriteLine(Toppings.Count);
         }
         double Interfaces.IPizza.Cost()
@@ -23,7 +22,7 @@ namespace PizzaBox.Domain.Models
             { cost += item.Value; }
             return cost;
         }
-        void addTopping(string a, double cost)
+        void AddTopping(string a, double cost)
         {
             if (Toppings.Count <= 5)
             {
@@ -34,11 +33,11 @@ namespace PizzaBox.Domain.Models
                 Console.WriteLine("Our Pizza Cook Faster and Taste Better with 5 or less toppings");
             }
         }
-        void removeTopping(string a)
+        void RemoveTopping(string a)
         {
             Toppings.Remove(a)
 ;        }
-        public void showToppings()
+        public void ShowToppings()
         {
             foreach(KeyValuePair<string,double> topping in Toppings)
             {

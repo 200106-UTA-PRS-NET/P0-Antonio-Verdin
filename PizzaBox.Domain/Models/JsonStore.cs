@@ -4,8 +4,10 @@ using System.Text;
 
 namespace PizzaBox.Domain.Models
 {
-   public class StoreJson
+   public class JsonStore
     {
-      //  public int 
+        public string Name { get; set; }
+        public int Id { get; set; }
+
     }
 }

@@ -12,7 +12,7 @@ namespace PizzaBox
     class PizzaBox
     {
         static void Main(string[] args)
-        {
+         {
 
         }
     }

@@ -7,16 +7,16 @@ namespace PizzaBox.Client.Models
     {
         public Orders()
         {
-            OrdersPizza = new HashSet<OrdersPizza>();
+            Pizzas = new HashSet<Pizzas>();
         }
 
-        public int Id { get; set; }
-        public int? CustomerId { get; set; }
-        public DateTime? OrderTime { get; set; }
-        public int? StoreId { get; set; }
+        public int OrderNum { get; set; }
+        public int? Ordercount { get; set; }
+        public Guid Orderuid { get; set; }
+        public DateTime? Dateordered { get; set; }
+        public int? Customerid { get; set; }
 
-        public virtual Pizza Customer { get; set; }
-        public virtual Store Store { get; set; }
-        public virtual ICollection<OrdersPizza> OrdersPizza { get; set; }
+        public virtual Customers Customer { get; set; }
+        public virtual ICollection<Pizzas> Pizzas { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Client.Models;
 using PizzaBox.Domain.DataAccess.Models;
@@ -9,7 +8,7 @@ using PizzaBox.Domain.DataAccess.Models;
 namespace PizzaBox.Domain.DataAcess.Repository
 {
 
-    public class StoreRepository : IPizzaRepository<PizzaLib.Store>
+    public class StoreRepository : IPizzaRepositoryRead<PizzaLib.Store>
     {
         PizzaBoxContext db;
         public StoreRepository()

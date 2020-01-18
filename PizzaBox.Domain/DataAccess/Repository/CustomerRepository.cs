@@ -4,10 +4,11 @@ using System.Linq;
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Client.Models;
 using PizzaBox.Domain.PizzaLib;
+using PizzaBox.Domain.PizzaLib.Abstracts;
 
 namespace PizzaBox.Domain.DataAccess.Repository
 {
-   public class CustomerRepository: IPizzaRepository<PizzaLib.Customer>
+   public class CustomerRepository: IPizzaRepositoryRead<PizzaLib.Customer>, IPizzaRepositoryAdd<PizzaLib.Customer>
     {
            PizzaBoxContext db;
            public CustomerRepository()
@@ -19,7 +20,19 @@ namespace PizzaBox.Domain.DataAccess.Repository
                this.db = db ?? throw new ArgumentNullException(nameof(db));
            }
 
-       public void PizzaPrint()
+        public void PizzaBoxAdd(Customer record)
+        {
+            /*if (db.Customers.Any(e => e.Ssn == employee.Ssn) || employee.Ssn == null)
+            {
+                Console.WriteLine($"This employee with SSN {employee.Ssn} already exists and cannot be added");
+                return;
+            }*/
+            //else
+            db.Customers.Add(CustomerMapper.Map(record));// this will generate insert query
+            db.SaveChanges();// this will execute the above generate insert query
+        }
+
+        public void PizzaPrint()
         {
             {
                 var query = db.Customers
@@ -32,7 +45,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
             }
         }
 
-        IEnumerable<Customer> IPizzaRepository<Customer>.PizzaReturn()
+        IEnumerable<Customer> IPizzaRepositoryRead<Customer>.PizzaReturn()
         {
             var query = from e in db.Customers
                         select CustomerMapper.Map(e);

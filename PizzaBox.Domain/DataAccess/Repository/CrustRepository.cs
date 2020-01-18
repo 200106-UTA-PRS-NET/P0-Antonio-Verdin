@@ -6,7 +6,7 @@ using PizzaBox.Client.Models;
 using PizzaBox.Domain.PizzaLib;
 namespace PizzaBox.Domain.DataAccess.Repository
 {
-    public class CrustRepository : IPizzaRepository<PizzaLib.Crust>
+    public class CrustRepository : IPizzaRepositoryRead<PizzaLib.Crust>
     {
         PizzaBoxContext db;
         public CrustRepository()

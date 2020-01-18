@@ -11,8 +11,19 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 Fname = customers.Fname,
                 Lname = customers.Lname,
                 Lastorder = customers.Lastorder,
-                
+
             };
+        }
+        public static Client.Models.Customers Map(PizzaLib.Customer customer)
+        {
+            return new Client.Models.Customers
+            {
+                Customerid = customer.Customerid,
+                Fname = customer.Fname,
+                Lname = customer.Lname,
+                Lastorder = customer.Lastorder
+            };
+
         }
     }
 }

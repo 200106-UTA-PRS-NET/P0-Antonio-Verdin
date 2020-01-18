@@ -5,11 +5,22 @@ using Microsoft.EntityFrameworkCore;
 using PizzaBox.Client.Models;
 using PizzaBox.Domain.DataAcess.Repository;
 using PizzaBox.Domain.DataAccess.Repository;
+using System;
 
 namespace PizzaBox
 {
     class PizzaBox
     {
+        static Domain.PizzaLib.Customer customer1()
+        {
+            return new Domain.PizzaLib.Customer()
+            {
+                Fname = "bob",
+                Lname = "dobbie",
+                Lastorder = DateTime.Now
+            };
+
+        }
         static void Main(string[] args)
         {
 
@@ -20,6 +31,7 @@ namespace PizzaBox
             storeRepository.PizzaPrint();
             crustRepository.PizzaPrint();
             customerRepository.PizzaPrint();
+            //customerRepository.PizzaBoxAdd(customer1());
         }
         static PizzaBoxContext ConnectDB()
         {

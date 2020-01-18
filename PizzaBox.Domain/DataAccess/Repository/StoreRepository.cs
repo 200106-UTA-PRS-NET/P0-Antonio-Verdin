@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using PizzaBox.Domain.PizzaLib;
-using Microsoft.EntityFrameworkCore;
+
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Client.Models;
 using PizzaBox.Domain.DataAccess.Models;
@@ -11,7 +9,7 @@ using PizzaBox.Domain.DataAccess.Models;
 namespace PizzaBox.Domain.DataAcess.Repository
 {
 
-    public class StoreRepository : IStoreRepository<PizzaLib.Store>
+    public class StoreRepository : IPizzaRepository<PizzaLib.Store>
     {
         PizzaBoxContext db;
         public StoreRepository()
@@ -23,10 +21,13 @@ namespace PizzaBox.Domain.DataAcess.Repository
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public IEnumerable<PizzaLib.Store> GetStores( )
+        public IEnumerable<PizzaLib.Store> PizzaReturn()
         {
             var query = from e in db.Store
                         select StoreMapper.Map(e);
+            return query;
+        }
+        public void PizzaPrint() { 
             var query2 = from e in db.Store
                         select e.Loc;
             foreach (string Loc in query2)
@@ -34,7 +35,7 @@ namespace PizzaBox.Domain.DataAcess.Repository
                 Console.WriteLine(Loc);
             }
 
-            return query;
+            
         }
     }
 }

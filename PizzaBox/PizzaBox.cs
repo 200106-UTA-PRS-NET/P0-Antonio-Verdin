@@ -28,21 +28,6 @@ namespace PizzaBox
             TerminalView terminal = new TerminalView();
             terminal.Terminal_Welcome();
 
-           
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

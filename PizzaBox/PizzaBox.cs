@@ -6,6 +6,7 @@ using PizzaBox.Client.Models;
 using PizzaBox.Domain.DataAcess.Repository;
 using PizzaBox.Domain.DataAccess.Repository;
 using System;
+using PizzaBox.Domain.View;
 
 namespace PizzaBox
 {
@@ -24,6 +25,29 @@ namespace PizzaBox
         static void Main(string[] args)
         {
 
+            TerminalView terminal = new TerminalView();
+            terminal.Terminal_Welcome();
+
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///Working Code here
+/*
             PizzaBoxContext db = ConnectDB();
             StoreRepository storeRepository = new StoreRepository(db);
             CrustRepository crustRepository = new CrustRepository(db);
@@ -31,7 +55,7 @@ namespace PizzaBox
             storeRepository.PizzaPrint();
             crustRepository.PizzaPrint();
             customerRepository.PizzaPrint();
-            //customerRepository.PizzaBoxAdd(customer1());
+            //customerRepository.PizzaBoxAdd(customer1());*/
         }
         static PizzaBoxContext ConnectDB()
         {

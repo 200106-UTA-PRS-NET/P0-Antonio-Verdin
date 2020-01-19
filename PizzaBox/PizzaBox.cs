@@ -24,20 +24,21 @@ namespace PizzaBox
         }
         static void Main(string[] args)
         {
-
-            TerminalView terminal = new TerminalView();
-            terminal.Terminal_Welcome();
-
-
-
-
-///Working Code here
-/*
             PizzaBoxContext db = ConnectDB();
             StoreRepository storeRepository = new StoreRepository(db);
             CrustRepository crustRepository = new CrustRepository(db);
             CustomerRepository customerRepository = new CustomerRepository(db);
+            TerminalView terminal = new TerminalView();
+            terminal.Terminal_Welcome();
+            Console.WriteLine("Select your Store"); 
             storeRepository.PizzaPrint();
+
+///Working Code here
+/*
+           
+            
+
+            
             crustRepository.PizzaPrint();
             customerRepository.PizzaPrint();
             //customerRepository.PizzaBoxAdd(customer1());*/

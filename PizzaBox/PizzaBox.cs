@@ -3,7 +3,6 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using PizzaBox.Client.Models;
-using PizzaBox.Domain.DataAcess.Repository;
 using PizzaBox.Domain.DataAccess.Repository;
 using System;
 using PizzaBox.Domain.View;
@@ -12,16 +11,7 @@ namespace PizzaBox
 {
     class PizzaBox
     {
-        static Domain.PizzaLib.Customer customer1()
-        {
-            return new Domain.PizzaLib.Customer()
-            {
-                Fname = "bob",
-                Lname = "dobbie",
-                Lastorder = DateTime.Now
-            };
 
-        }
         static void Main(string[] args)
         {
             PizzaBoxContext db = ConnectDB();
@@ -30,18 +20,11 @@ namespace PizzaBox
             CustomerRepository customerRepository = new CustomerRepository(db);
             TerminalView terminal = new TerminalView();
             terminal.Terminal_Welcome();
-            Console.WriteLine("Select your Store"); 
+            Console.WriteLine("Select your Store");
             storeRepository.PizzaPrint();
+            Console.ReadKey();
+            Console.Clear();
 
-///Working Code here
-/*
-           
-            
-
-            
-            crustRepository.PizzaPrint();
-            customerRepository.PizzaPrint();
-            //customerRepository.PizzaBoxAdd(customer1());*/
         }
         static PizzaBoxContext ConnectDB()
         {
@@ -55,6 +38,16 @@ namespace PizzaBox
                   var options = optionsBuilder.Options;
                   PizzaBoxContext db = new PizzaBoxContext(options);
                   return db;
+        }
+        static Domain.PizzaLib.Customer customer1()
+        {
+            return new Domain.PizzaLib.Customer()
+            {
+                Fname = "bob",
+                Lname = "dobbie",
+                Lastorder = DateTime.Now
+            };
+
         }
     }
 }

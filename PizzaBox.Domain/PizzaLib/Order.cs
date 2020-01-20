@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PizzaBox.Client.Models
+namespace PizzaBox.Domain.PizzaLib
 {
-    public partial class Orders
+   public class Order
     {
-        public Orders()
-        {
-            Pizzas = new HashSet<Pizzas>();
-        }
-
         public int OrderNum { get; set; }
         public int? Ordercount { get; set; }
         public Guid Orderuid { get; set; }
@@ -18,10 +13,6 @@ namespace PizzaBox.Client.Models
         public int? Storeid { get; set; }
         public decimal? Ordercost { get; set; }
         public int? Crust { get; set; }
-
-        public virtual Crust CrustNavigation { get; set; }
-        public virtual Customers Customer { get; set; }
-        public virtual Store Store { get; set; }
-        public virtual ICollection<Pizzas> Pizzas { get; set; }
+        public Queue<string> toppings = new Queue<string>();
     }
 }

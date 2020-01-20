@@ -12,6 +12,7 @@ namespace PizzaBox.Client.Models
 
         public int Id { get; set; }
         public string Topping { get; set; }
+        public decimal? Price { get; set; }
 
         public virtual ICollection<Pizzas> Pizzas { get; set; }
     }

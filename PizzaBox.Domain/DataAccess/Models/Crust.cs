@@ -7,12 +7,13 @@ namespace PizzaBox.Client.Models
     {
         public Crust()
         {
-            Pizzas = new HashSet<Pizzas>();
+            Orders = new HashSet<Orders>();
         }
 
         public int Id { get; set; }
         public string Crust1 { get; set; }
+        public decimal? Price { get; set; }
 
-        public virtual ICollection<Pizzas> Pizzas { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }

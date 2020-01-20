@@ -26,6 +26,8 @@ namespace PizzaBox.Client.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS01;Database=PizzaBox;Trusted_Connection=True;");
             }
         }
 
@@ -40,6 +42,10 @@ namespace PizzaBox.Client.Models
                 entity.Property(e => e.Crust1)
                     .HasColumnName("crust")
                     .IsUnicode(false);
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasColumnType("money");
             });
 
             modelBuilder.Entity<Customers>(entity =>
@@ -73,16 +79,34 @@ namespace PizzaBox.Client.Models
 
                 entity.Property(e => e.Orderuid).HasDefaultValueSql("(newid())");
 
+                entity.Property(e => e.Crust).HasColumnName("crust");
+
                 entity.Property(e => e.Customerid).HasColumnName("customerid");
 
                 entity.Property(e => e.Dateordered)
                     .HasColumnName("dateordered")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.Ordercost)
+                    .HasColumnName("ordercost")
+                    .HasColumnType("money");
+
+                entity.Property(e => e.Storeid).HasColumnName("storeid");
+
+                entity.HasOne(d => d.CrustNavigation)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.Crust)
+                    .HasConstraintName("FK__Orders__crust__4D5F7D71");
+
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.Customerid)
                     .HasConstraintName("FK__Orders__customer__14270015");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.Storeid)
+                    .HasConstraintName("FK_Orders_Store");
             });
 
             modelBuilder.Entity<Pizzas>(entity =>
@@ -91,23 +115,15 @@ namespace PizzaBox.Client.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Crust).HasColumnName("crust");
-
-                entity.HasOne(d => d.CrustNavigation)
-                    .WithMany(p => p.Pizzas)
-                    .HasForeignKey(d => d.Crust)
-                    .HasConstraintName("FK__Pizzas__crust__0F624AF8");
-
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.Pizzas)
                     .HasForeignKey(d => d.Orderid)
-                    .HasConstraintName("FK__Pizzas__Orderid__0C85DE4D");
+                    .HasConstraintName("FK__Pizzas__Orderid__634EBE90");
 
                 entity.HasOne(d => d.ToppingNavigation)
                     .WithMany(p => p.Pizzas)
                     .HasForeignKey(d => d.Topping)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Pizzas__Topping__0E6E26BF");
+                    .HasConstraintName("FK__Pizzas__Topping__625A9A57");
             });
 
             modelBuilder.Entity<Store>(entity =>
@@ -126,6 +142,10 @@ namespace PizzaBox.Client.Models
                 entity.ToTable("Toppings", "Pizza");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasColumnType("money");
 
                 entity.Property(e => e.Topping)
                     .HasColumnName("topping")

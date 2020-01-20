@@ -46,8 +46,14 @@ namespace PizzaBox.Domain.DataAccess.Repository
         }
         public void PrintUser(int customerid)
         {
-            var emp = db.Customers.FirstOrDefault(e => e.Customerid == customerid);
-            Console.WriteLine(emp.Fname);
+            if (db.Customers.Any(e => e.Customerid == e.Customerid))
+            {
+                var cus = db.Customers.FirstOrDefault(e => e.Customerid == customerid);
+                if (cus.Lastorder == null) { cus.Lastorder = DateTime.Now; }
+                Console.WriteLine($"Welcome {cus.Fname} {cus.Lname} the last time you here was \n{cus.Lastorder}");
+            }
+            else {}
+            
         }
         IEnumerable<Customer> IPizzaRepositoryRead<Customer>.PizzaReturn()
         {

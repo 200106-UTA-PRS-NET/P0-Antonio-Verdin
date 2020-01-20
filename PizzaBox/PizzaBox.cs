@@ -15,21 +15,19 @@ namespace PizzaBox
 
         static void Main(string[] args)
         {
-            PizzaBoxContext db = ConnectDB();
+           /* PizzaBoxContext db = ConnectDB();
             StoreRepository storeRepository = new StoreRepository(db);
             CrustRepository crustRepository = new CrustRepository(db);
             CustomerRepository customerRepository = new CustomerRepository(db);
-            OrderRepository orderRepository = new OrderRepository(db);
+            OrderRepository orderRepository = new OrderRepository(db);*/
             TerminalView terminal = new TerminalView();
             terminal.Terminal_Welcome();
-            Console.WriteLine("Enter Your User number");
-            // storeRepository.PizzaPrint();
-            Console.WriteLine();
-            /// crustRepository.PizzaPrint();
-            string a = Console.ReadLine();
-            customerRepository.PrintUser(Convert.ToInt16(a));
+            /* while (customernum == 0){
+                 customernum = Login_Screen();
+             }
+             customerRepository.PrintUser(customernum);*/
+            Login_Screen();
             Console.ReadKey();
-
             Console.Clear();
 
         }
@@ -44,17 +42,37 @@ namespace PizzaBox
                   optionsBuilder.UseSqlServer(configuration.GetConnectionString("PizzaBox" ));
                   var options = optionsBuilder.Options;
                   PizzaBoxContext db = new PizzaBoxContext(options);
+
                   return db;
         }
-        static Domain.PizzaLib.Customer customer1()
+        static void Login_Screen()
         {
-            return new Domain.PizzaLib.Customer()
-            {
-                Fname = "bob",
-                Lname = "dobbie",
-                Lastorder = DateTime.Now
-            };
+            PizzaBoxContext db = ConnectDB();
+            CustomerRepository customerRepository = new CustomerRepository(db);
 
+           // Console.WriteLine("Enter Your User number");
+            // storeRepository.PizzaPrint();
+            int x=0;
+            while (x == 0)
+            {
+               Console.WriteLine("Enter Your User number");
+               string a = Console.ReadLine();
+                try
+                {
+                    x = Convert.ToInt16(a);
+                    customerRepository.PrintUser(x);
+                }
+                catch
+                {
+                    Console.WriteLine("You did not input a valid number Try Again Press Any Key to continue");
+                    Console.ReadKey();
+                    Console.Clear();
+                    x = 0;
+                }
+
+            } 
         }
+
+        
     }
 }

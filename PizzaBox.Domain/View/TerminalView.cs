@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PizzaBox.Domain.View
 {
-  public  class TerminalView
+ public  class TerminalView
     {
         public void Terminal_Welcome()
         {

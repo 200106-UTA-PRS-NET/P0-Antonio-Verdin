@@ -22,11 +22,9 @@ namespace PizzaBox
             OrderRepository orderRepository = new OrderRepository(db);*/
             TerminalView terminal = new TerminalView();
             terminal.Terminal_Welcome();
-            /* while (customernum == 0){
-                 customernum = Login_Screen();
-             }
-             customerRepository.PrintUser(customernum);*/
+
             Login_Screen();
+            User_Menu();
             Console.ReadKey();
             Console.Clear();
 
@@ -50,8 +48,6 @@ namespace PizzaBox
             PizzaBoxContext db = ConnectDB();
             CustomerRepository customerRepository = new CustomerRepository(db);
 
-           // Console.WriteLine("Enter Your User number");
-            // storeRepository.PizzaPrint();
             int x=0;
             while (x == 0)
             {
@@ -59,6 +55,7 @@ namespace PizzaBox
                string a = Console.ReadLine();
                 try
                 {
+                    Console.Clear(); 
                     x = Convert.ToInt16(a);
                     customerRepository.PrintUser(x);
                 }
@@ -71,6 +68,12 @@ namespace PizzaBox
                 }
 
             } 
+        }
+        static void User_Menu()
+        {
+            Console.WriteLine($"Please Select Your Option:\n(O)rder\n(V)iew Order History\n(Q)uit ");
+            Console.ReadKey();
+
         }
 
         

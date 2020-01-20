@@ -44,7 +44,11 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 }
             }
         }
-
+        public void PrintUser(int customerid)
+        {
+            var emp = db.Customers.FirstOrDefault(e => e.Customerid == customerid);
+            Console.WriteLine(emp.Fname);
+        }
         IEnumerable<Customer> IPizzaRepositoryRead<Customer>.PizzaReturn()
         {
             var query = from e in db.Customers

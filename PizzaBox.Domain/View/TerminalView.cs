@@ -9,6 +9,7 @@ namespace PizzaBox.Domain.View
         public void Terminal_Welcome()
         {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+            Console.CursorSize = 100;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(@"
 
@@ -23,41 +24,45 @@ namespace PizzaBox.Domain.View
 
 
 
+    __        __     _                                _           ____   _                  ____              
+    \ \      / /___ | |  ___  ___   _ __ ___    ___  | |_  ___   |  _ \ (_) ____ ____ __ _ | __ )   ___ __  __
+     \ \ /\ / // _ \| | / __|/ _ \ | '_ ` _ \  / _ \ | __|/ _ \  | |_) || ||_  /|_  // _` ||  _ \  / _ \\ \/ /
+      \ V  V /|  __/| || (__| (_) || | | | | ||  __/ | |_| (_) | |  __/ | | / /  / /| (_| || |_) || (_) |>  < 
+       \_/\_/  \___||_| \___|\___/ |_| |_| |_| \___|  \__|\___/  |_|    |_|/___|/___|\__,_||____/  \___//_/\_\
+                                                                                                           
+                            
+
+                                        Press Any Key to Continue
 
 
 
 
 
-    ____    __    ____  _______  __        ______   ______   .___  ___.  _______    .___________. ______      .______    __   ________   ________      ___         .______     ______   ___   ___ 
-    \   \  /  \  /   / |   ____||  |      /      | /  __  \  |   \/   | |   ____|   |           |/  __  \     |   _  \  |  | |       /  |       /     /   \        |   _  \   /  __  \  \  \ /  / 
-     \   \/    \/   /  |  |__   |  |     |  ,----'|  |  |  | |  \  /  | |  |__      `---|  |----|  |  |  |    |  |_)  | |  | `---/  /   `---/  /     /  ^  \       |  |_)  | |  |  |  |  \  V  /  
-      \            /   |   __|  |  |     |  |     |  |  |  | |  |\/|  | |   __|         |  |    |  |  |  |    |   ___/  |  |    /  /       /  /     /  /_\  \      |   _  <  |  |  |  |   >   <   
-       \    /\    /    |  |____ |  `----.|  `----.|  `--'  | |  |  |  | |  |____        |  |    |  `--'  |    |  |      |  |   /  /----.  /  /----./  _____  \     |  |_)  | |  `--'  |  /  .  \  
-        \__/  \__/     |_______||_______| \______| \______/  |__|  |__| |_______|       |__|     \______/     | _|      |__|  /________| /________/__/     \__\    |______/   \______/  /__/ \__\ 
+    
                                                                                                                                                                                               
                                                                                                                                                                                                                                                        
 
-                                                                                          Press Any Key to Continue                                    ");
+                                                                                                                              ");
             Console.ReadKey();
             Console.Clear();
             Console.SetCursorPosition(2, Console.LargestWindowHeight/3);
 
             Console.WriteLine(@"
-  ===========================================================================================================================================================================================
-  =                                       PizzaBox is a Demostration Software for a simple set of commands to connect and retrieve                                                          =
-  =                                       from a database utilizing the C# progamming language along. In todays demonstation we will                                                        =
-  =                                       be showing very rudimentary procedures of a point of sale system or POS for short.                                                                =
-  =                                                                                                                                                                                         =
-  =                                                                                                                                                                                         =
-  =                                                                                                                                                                                         =
-  =                                                                                                                                                                                         =
-  =                                                                                                                                                                                         =
-  =                                                                                                                                                                                         =
-  =                                                                                                                                                                                         =
-  ===========================================================================================================================================================================================
+     ========================================================================================================================================
+     =              PizzaBox is a Demostration Software for a simple set of commands to connect and retrieve                                =
+     =              from a database utilizing the C# progamming language along. In todays demonstation we will                              =
+     =              be showing very rudimentary procedures of a point of sale system or POS for short.                                      =
+     =                                                                                                                                      =
+     =                                                                                                                                      =
+     =                                                                                                                                      =
+     =                                                                                                                                      =
+     =                                                                                                                                      =
+     =                                                                                                                                      =
+     =                                                                                                                                      =
+     ========================================================================================================================================
                                                                                                                                                                                                                                                        
 
-                                                                                          Press Any Key to Continue                                    ");
+                                              Press Any Key to Continue                                    ");
             Console.ReadKey();
             Console.Clear();
         }

@@ -19,11 +19,17 @@ namespace PizzaBox
             StoreRepository storeRepository = new StoreRepository(db);
             CrustRepository crustRepository = new CrustRepository(db);
             CustomerRepository customerRepository = new CustomerRepository(db);
+            OrderRepository orderRepository = new OrderRepository(db);
             TerminalView terminal = new TerminalView();
             terminal.Terminal_Welcome();
-            Console.WriteLine("Select your Store");
-            storeRepository.PizzaPrint();
+            Console.WriteLine("Enter Your User number");
+            // storeRepository.PizzaPrint();
+            Console.WriteLine();
+            /// crustRepository.PizzaPrint();
+            string a = Console.ReadLine();
+            customerRepository.PrintUser(Convert.ToInt16(a));
             Console.ReadKey();
+
             Console.Clear();
 
         }

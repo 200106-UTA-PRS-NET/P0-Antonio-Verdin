@@ -10,8 +10,9 @@ namespace PizzaBox.Domain.DataAccess
         {
             return new PizzaLib.Crust()
             {
-                Id =  crust.Id,
-                name = crust.Crust1
+                Id = crust.Id,
+                name = crust.Crust1,
+                price = crust.Price
             };
         }
     }

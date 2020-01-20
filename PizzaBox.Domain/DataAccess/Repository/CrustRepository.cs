@@ -21,8 +21,8 @@ namespace PizzaBox.Domain.DataAccess.Repository
         public void PizzaPrint()
         {
             var query2 = from e in db.Crust
-                         select e.Crust1;
-            foreach (string Loc in query2)
+                         select e.Price;
+            foreach (decimal? Loc in query2)
             {
                 Console.WriteLine(Loc);
             }

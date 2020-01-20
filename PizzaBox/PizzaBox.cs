@@ -6,7 +6,7 @@ using PizzaBox.Client.Models;
 using PizzaBox.Domain.DataAccess.Repository;
 using System;
 using PizzaBox.Domain.View;
-using PizzaBox.Domain.DataAcess.Repository;
+using PizzaBox.Domain.PizzaLib;
 
 namespace PizzaBox
 {
@@ -15,18 +15,9 @@ namespace PizzaBox
 
         static void Main(string[] args)
         {
-           /* PizzaBoxContext db = ConnectDB();
-            StoreRepository storeRepository = new StoreRepository(db);
-            CrustRepository crustRepository = new CrustRepository(db);
-            CustomerRepository customerRepository = new CustomerRepository(db);
-            OrderRepository orderRepository = new OrderRepository(db);*/
-            TerminalView terminal = new TerminalView();
-            terminal.Terminal_Welcome();
 
             Login_Screen();
-            User_Menu();
-            Console.ReadKey();
-            Console.Clear();
+
 
         }
         static PizzaBoxContext ConnectDB()
@@ -47,12 +38,25 @@ namespace PizzaBox
         {
             PizzaBoxContext db = ConnectDB();
             CustomerRepository customerRepository = new CustomerRepository(db);
-
+            OrderRepository orderRepository = new OrderRepository(db);
+            TerminalView terminal = new TerminalView();
+            terminal.Terminal_Welcome();
             int x=0;
             while (x == 0)
             {
-               Console.WriteLine("Enter Your User number");
+               Console.WriteLine("Enter Your User number or (R)egister");
                string a = Console.ReadLine();
+                if(a=="R"||a=="r")
+                {
+                    Customer newcustomer = new Customer();
+                    Console.WriteLine("Register new user\nEnter your first name: ");
+                    newcustomer.Fname = Console.ReadLine();
+                    Console.WriteLine("\nEnter your Last name: ");
+                    newcustomer.Lname = Console.ReadLine();
+                    customerRepository.PizzaBoxAdd(newcustomer);
+                    Console.WriteLine("Enter Your User number: ");
+                    a = Console.ReadLine();
+                }
                 try
                 {
                     Console.Clear(); 
@@ -61,18 +65,38 @@ namespace PizzaBox
                 }
                 catch
                 {
-                    Console.WriteLine("You did not input a valid number Try Again Press Any Key to continue");
+                    Console.WriteLine("Error! Press Any Key to continue");
                     Console.ReadKey();
                     Console.Clear();
                     x = 0;
                 }
 
-            } 
-        }
-        static void User_Menu()
-        {
-            Console.WriteLine($"Please Select Your Option:\n(O)rder\n(V)iew Order History\n(Q)uit ");
-            Console.ReadKey();
+            }
+            while (true)
+            {
+                Console.WriteLine($"Please Select Your Option:\n(O)rder\n(V)iew Order History\n(X)Logout");
+                string option = Console.ReadLine();
+                if (option == "x" || option == "X")
+                {
+                    Console.Clear();
+                    Login_Screen();
+                }
+                else if (option == "v" || option == "V")
+                {
+                    orderRepository.OrderHistory(x);
+
+                }
+                else if (option == "o"|| option == "O")
+                {
+                    Console.WriteLine($"Please Select Your Option\n(S)elect Pizza\n(C)reate your own");
+                    option = Console.ReadLine();
+                    if (option == "S" || option == "s")
+                    {
+
+                    }
+                }
+            }
+
 
         }
 

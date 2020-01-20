@@ -30,6 +30,8 @@ namespace PizzaBox.Domain.DataAccess.Repository
             //else
             db.Customers.Add(CustomerMapper.Map(record));// this will generate insert query
             db.SaveChanges();// this will execute the above generate insert query
+            var cus = db.Customers.FirstOrDefault(e => e.Fname == record.Fname && e.Lname==record.Lname);
+            Console.WriteLine($"Your id number is {cus.Customerid}");
         }
 
         public void PizzaPrint()

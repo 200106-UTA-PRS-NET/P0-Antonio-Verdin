@@ -21,10 +21,10 @@ namespace PizzaBox.Domain.DataAccess.Repository
         public void PizzaPrint()
         {
             var query2 = from e in db.Crust
-                         select e.Price;
-            foreach (decimal? Loc in query2)
+                         select e;
+            foreach (var crust in query2)
             {
-                Console.WriteLine(Loc);
+                Console.WriteLine($"{crust.Id}).\t{crust.Crust1}\t{String.Format("{0:c}",crust.Price)}");
             }
 
         }

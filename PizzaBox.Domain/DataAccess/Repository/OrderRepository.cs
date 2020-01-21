@@ -36,6 +36,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
 
         public void OrderHistory(int customerid)
         {
+            
             var query = db.Orders;
                 if (db.Orders.Any(e => e.Customerid == customerid)) 
             {
@@ -44,7 +45,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 {
                     
                     Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Ordercount} \tCost: { item.Ordercost}"  );
-                    //GetToppings(item.Orderuid);
+                    //TestToppings(item.Orderuid);
                 }
             }
             else
@@ -61,7 +62,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
                               join p in db.Pizzas
                               on e.Id equals p.Topping
                               join s in db.Orders
-                              on p.Orderid equals s.Orderuid//
+                              on p.Orderid equals s.Orderuid
                               join d in db.Crust
                               on s.Crust equals d.Id
                               where s.Orderuid == ordernum
@@ -78,7 +79,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
             foreach (var topping in toppinglis)
             {
 
-                Console.WriteLine($"{topping.topping}--------{topping.crust}");
+                Console.WriteLine($"{topping.topping}");
                 cost += topping.price;
             }
             Console.WriteLine($"Total Cost is {cost}");

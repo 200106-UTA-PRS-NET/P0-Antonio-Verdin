@@ -39,11 +39,34 @@ namespace PizzaBox
             PizzaBoxContext db = ConnectDB();
             CustomerRepository customerRepository = new CustomerRepository(db);
             OrderRepository orderRepository = new OrderRepository(db);
+            StoreRepository storeRepository = new StoreRepository(db);
             TerminalView terminal = new TerminalView();
             terminal.Terminal_Welcome();
-            int x=0;
-            while (x == 0)
+            int customerid=0;
+            int storeid = 0;
+            while (storeid == 0)
             {
+                Console.WriteLine("Please select your Location");
+                storeRepository.PizzaPrint();
+                string a = Console.ReadLine();
+                try
+                {
+                    Console.Clear();
+                    storeid = Convert.ToInt16(a);
+                    storeRepository.PrintStores(storeid);
+                }
+                catch
+                {
+                    Console.WriteLine("Invaild Error! Press Any Key to continue");
+                    Console.ReadKey();
+                    Console.Clear();
+                    storeid = 0;
+                }
+            }
+            while (customerid == 0)
+            {
+
+                Console.Clear();
                Console.WriteLine("Enter Your User number or (R)egister");
                string a = Console.ReadLine();
                 if(a=="R"||a=="r")
@@ -60,15 +83,15 @@ namespace PizzaBox
                 try
                 {
                     Console.Clear(); 
-                    x = Convert.ToInt16(a);
-                    customerRepository.PrintUser(x);
+                    customerid = Convert.ToInt16(a);
+                    customerRepository.PrintUser(customerid);
                 }
                 catch
                 {
                     Console.WriteLine("Error! Press Any Key to continue");
                     Console.ReadKey();
                     Console.Clear();
-                    x = 0;
+                    customerid = 0;
                 }
 
             }
@@ -84,7 +107,7 @@ namespace PizzaBox
                 }
                 else if (option == "v" || option == "V")
                 {
-                    orderRepository.OrderHistory(x);
+                    orderRepository.OrderHistory(customerid);
 
                 }
                 else if (option == "o"|| option == "O")
@@ -95,8 +118,26 @@ namespace PizzaBox
                    
                     if (option == "S" || option == "s")
                     {
-                        orderRepository.TestToppings(new Guid("647297d3-c1b5-41b5-9b9a-168a32141bd9"));
-                        
+                        Console.WriteLine("1. Large Pep Pizza\t 2. Medium Pep Pizza\t\t 3. Small Pep Pizza");
+                        Console.WriteLine("4. Large Cheese Pizza\t 5. Medium Cheese Pizza\t\t 6. Small Cheese Pizza");
+                        Console.WriteLine("7. Large Meat Pizza\t 8. Medium Meat Pizza\t\t 9. Small Meat Pizza");
+                        Console.WriteLine("\t0. Veggie Gluten Friendly Pizza\t E(X)it");
+                        Console.ReadKey();
+
+                        ///TODO Create a switch statement with the default GUIDS
+
+                        //orderRepository.TestToppings(new Guid("647297d3-c1b5-41b5-9b9a-168a32141bd9"));
+                    }
+                    else if(option=="C"||option == "c")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Select Crust Type and Size");
+                        CrustRepository crustrepository = new CrustRepository(db);
+                        crustrepository.PizzaPrint();
+                        Console.ReadLine();
+                        Console.Clear();
+                        Console.WriteLine("Select your Toppings From the List");
+
 
                     }
                 }

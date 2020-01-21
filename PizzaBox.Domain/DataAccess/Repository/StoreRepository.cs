@@ -5,7 +5,7 @@ using PizzaBox.Domain.Abstracts;
 using PizzaBox.Client.Models;
 using PizzaBox.Domain.DataAccess.Models;
 
-namespace PizzaBox.Domain.DataAcess.Repository
+namespace PizzaBox.Domain.DataAccess.Repository
 {
 
     public class StoreRepository : IPizzaRepositoryRead<PizzaLib.Store>
@@ -26,15 +26,27 @@ namespace PizzaBox.Domain.DataAcess.Repository
                         select StoreMapper.Map(e);
             return query;
         }
-        public void PizzaPrint() { 
+        public void PizzaPrint()
+        {
             var query2 = from e in db.Store
-                        select e.Loc;
-            foreach (string Loc in query2)
+                         select e;
+            foreach (var store in query2)
             {
-                Console.WriteLine(Loc);
+                Console.WriteLine($"{store.Id}).\t{store.Loc}");
             }
 
-            
         }
-    }
+        public void PrintStores(int storenum)
+            {
+                if (db.Store.Any(e => e.Id == e.Id))
+                {
+                    var cus = db.Store.FirstOrDefault(e => e.Id == storenum);
+                    Console.WriteLine($"Welcome {cus.Loc}");
+                }
+                else { }
+
+            }
+        }
+
+            
 }

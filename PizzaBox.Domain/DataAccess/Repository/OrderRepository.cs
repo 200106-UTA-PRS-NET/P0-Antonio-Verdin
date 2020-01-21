@@ -40,11 +40,11 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 if (db.Orders.Any(e => e.Customerid == customerid)) 
             {
                 var results = db.Orders.Where(s => s.Customerid == customerid);
-
                 foreach (var item in results)
                 {
                     
-                    Console.WriteLine($"Customer: {item.Customerid}\tOrder #: {item.OrderNum}\tCost: { item.Ordercost}");
+                    Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Ordercount} \tCost: { item.Ordercost}"  );
+                    //GetToppings(item.Orderuid);
                 }
             }
             else
@@ -52,6 +52,36 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 Console.Clear();
                 Console.WriteLine("No Order History");
             }
+        }
+        public void TestToppings(Guid ordernum)
+        {
+            decimal? cost = 0;
+            
+            var toppinglis = (from e in db.Toppings
+                              join p in db.Pizzas
+                              on e.Id equals p.Topping
+                              join s in db.Orders
+                              on p.Orderid equals s.Orderuid//
+                              join d in db.Crust
+                              on s.Crust equals d.Id
+                              where s.Orderuid == ordernum
+                              select new
+                              {
+                                  id = p.Orderid,
+                                  topping = e.Topping,
+                                  price = e.Price,
+                                  crust = d.Crust1
+
+                              }).ToList();
+            
+            
+            foreach (var topping in toppinglis)
+            {
+
+                Console.WriteLine($"{topping.topping}--------{topping.crust}");
+                cost += topping.price;
+            }
+            Console.WriteLine($"Total Cost is {cost}");
         }
 
         IEnumerable<Order> IPizzaRepositoryRead<Order>.PizzaReturn()

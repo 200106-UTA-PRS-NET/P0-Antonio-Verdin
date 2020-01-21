@@ -80,6 +80,7 @@ namespace PizzaBox
                 {
                     Console.Clear();
                     Login_Screen();
+                    
                 }
                 else if (option == "v" || option == "V")
                 {
@@ -88,10 +89,14 @@ namespace PizzaBox
                 }
                 else if (option == "o"|| option == "O")
                 {
+                    Console.Clear();
                     Console.WriteLine($"Please Select Your Option\n(S)elect Pizza\n(C)reate your own");
                     option = Console.ReadLine();
+                   
                     if (option == "S" || option == "s")
                     {
+                        orderRepository.TestToppings(new Guid("647297d3-c1b5-41b5-9b9a-168a32141bd9"));
+                        
 
                     }
                 }

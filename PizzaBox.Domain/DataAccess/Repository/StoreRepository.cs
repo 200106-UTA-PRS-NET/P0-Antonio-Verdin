@@ -41,7 +41,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 if (db.Store.Any(e => e.Id == e.Id))
                 {
                     var cus = db.Store.FirstOrDefault(e => e.Id == storenum);
-                    Console.WriteLine($"Welcome {cus.Loc}");
+                    Console.WriteLine($"Welcome to PizzaBox in {cus.Loc}");
                 }
                 else { }
 

@@ -44,6 +44,7 @@ namespace PizzaBox
             terminal.Terminal_Welcome();
             int customerid=0;
             int storeid = 0;
+            Domain.PizzaLib.Crust usercrust = new Domain.PizzaLib.Crust();
             while (storeid == 0)
             {
                 Console.WriteLine("Please select your Location");
@@ -66,7 +67,7 @@ namespace PizzaBox
             while (customerid == 0)
             {
 
-                Console.Clear();
+                //Console.Clear();
                Console.WriteLine("Enter Your User number or (R)egister");
                string a = Console.ReadLine();
                 if(a=="R"||a=="r")
@@ -136,7 +137,9 @@ namespace PizzaBox
                         crustrepository.PizzaPrint();
                         Console.ReadLine();
                         Console.Clear();
-                        Console.WriteLine("Select your Toppings From the List");
+                        Console.WriteLine("Select your Toppings From the List (E)nd Selction");
+                        crustrepository.ToppingPrint();
+                        Console.ReadLine();
 
 
                     }

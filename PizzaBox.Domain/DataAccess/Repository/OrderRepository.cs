@@ -58,13 +58,13 @@ namespace PizzaBox.Domain.DataAccess.Repository
             foreach(var item in orderlist)
             {
                 Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Ordercount} \tCost: { item.Ordercost}");
-                TestToppings(item.Orderuid);
+                PrintToppings(item.Orderuid);
 
             }
 
                 
         }
-        public void TestToppings(Guid ordernum)
+        public void PrintToppings(Guid ordernum)
         {
             decimal? cost = 0;
             

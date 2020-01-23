@@ -44,6 +44,7 @@ namespace PizzaBox
             terminal.Terminal_Welcome();
             int customerid=0;
             int storeid = 0;
+            int crust = 0;
             Domain.PizzaLib.Crust usercrust = new Domain.PizzaLib.Crust();
             while (storeid == 0)
             {
@@ -129,16 +130,25 @@ namespace PizzaBox
                     }
                     else if(option=="C"||option == "c")
                     {
+
                         Console.Clear();
                         Console.WriteLine("Select Crust Type and Size");
                         CrustRepository crustrepository = new CrustRepository(db);
                         crustrepository.PizzaPrint();
-                        Console.ReadLine();
-                        Console.Clear();
-                        Console.WriteLine("Select your Toppings From the List (E)nd Selction");
-                        crustrepository.ToppingPrint();
-                        Console.ReadLine();
-
+                        try
+                        {
+                            crust = Convert.ToInt16(Console.ReadLine());
+                            Console.WriteLine("Select your Toppings From the List (E)nd");
+                            crustrepository.ToppingPrint();
+                            Console.ReadLine();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Error in input");
+                            Console.WriteLine( "Press any key to continue");
+                            Console.ReadLine();
+                            Console.Clear();
+                        }
 
                     }
                 }

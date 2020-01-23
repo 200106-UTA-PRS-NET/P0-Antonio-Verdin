@@ -33,7 +33,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
                          select e;
             foreach (var topping in query2)
             {
-                Console.WriteLine($"{topping.Id}).\t{topping.Topping}\t{String.Format("{0:c}", topping.Price)}");
+                Console.WriteLine($"{topping.Id}).\t{topping.Topping.Substring(0,4)}\t{String.Format("{0:c}", topping.Price)}");
             }
 
         }

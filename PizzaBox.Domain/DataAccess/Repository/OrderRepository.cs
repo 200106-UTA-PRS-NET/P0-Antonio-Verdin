@@ -36,23 +36,33 @@ namespace PizzaBox.Domain.DataAccess.Repository
 
         public void OrderHistory(int customerid)
         {
-            
+
+            IList<Orders> orderlist = new List<Orders>();
             var query = db.Orders;
                 if (db.Orders.Any(e => e.Customerid == customerid)) 
             {
                 var results = db.Orders.Where(s => s.Customerid == customerid);
                 foreach (var item in results)
                 {
-                    
-                    Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Ordercount} \tCost: { item.Ordercost}"  );
-                    //TestToppings(item.Orderuid);
+                    orderlist.Add(item);
+
                 }
+
+
             }
             else
             {
                 Console.Clear();
                 Console.WriteLine("No Order History");
             }
+            foreach(var item in orderlist)
+            {
+                Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Ordercount} \tCost: { item.Ordercost}");
+                TestToppings(item.Orderuid);
+
+            }
+
+                
         }
         public void TestToppings(Guid ordernum)
         {

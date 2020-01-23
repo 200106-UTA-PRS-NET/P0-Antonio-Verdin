@@ -22,12 +22,6 @@ namespace PizzaBox.Domain.DataAccess.Repository
 
         public void PizzaBoxAdd(Customer record)
         {
-            /*if (db.Customers.Any(e => e.Ssn == employee.Ssn) || employee.Ssn == null)
-            {
-                Console.WriteLine($"This employee with SSN {employee.Ssn} already exists and cannot be added");
-                return;
-            }*/
-            //else
             db.Customers.Add(CustomerMapper.Map(record));// this will generate insert query
             db.SaveChanges();// this will execute the above generate insert query
             var cus = db.Customers.FirstOrDefault(e => e.Fname == record.Fname && e.Lname==record.Lname);
@@ -46,15 +40,26 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 }
             }
         }
-        public void PrintUser(int customerid)
+        public int PrintUser(int customerid)
         {
             if (db.Customers.Any(e => e.Customerid == e.Customerid))
             {
                 var cus = db.Customers.FirstOrDefault(e => e.Customerid == customerid);
-                if (cus.Lastorder == null) { cus.Lastorder = DateTime.Now; }
-                Console.WriteLine($"Welcome {cus.Fname} {cus.Lname} the last time you here was \n{cus.Lastorder}");
+
+                if (cus.Lastorder == null || cus.Lastorder < DateTime.Now.AddHours(-24))
+                {
+                    //v  cus.Lastorder = DateTime.Now;
+                    Console.WriteLine($"Welcome {cus.Fname} {cus.Lname} the last time you here was \n{cus.Lastorder}");
+                    return (cus.Customerid);
+                }
+
+                else
+                {
+                    Console.WriteLine("You have to wait a full 24 hours to Order more delicious pizza!");
+
+                }
             }
-            else {}
+            return 0;
             
         }
         IEnumerable<Customer> IPizzaRepositoryRead<Customer>.PizzaReturn()

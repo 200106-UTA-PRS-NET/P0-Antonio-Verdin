@@ -92,7 +92,6 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 Console.WriteLine($"{topping.topping}");
                 cost += topping.price;
             }
-            Console.WriteLine($"Total Cost is {cost}");
         }
 
         IEnumerable<Order> IPizzaRepositoryRead<Order>.PizzaReturn()

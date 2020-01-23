@@ -85,7 +85,7 @@ namespace PizzaBox
                 {
                     Console.Clear(); 
                     customerid = Convert.ToInt16(a);
-                    customerRepository.PrintUser(customerid);
+                    customerid = customerRepository.PrintUser(customerid);
                 }
                 catch
                 {
@@ -126,8 +126,6 @@ namespace PizzaBox
                         Console.ReadKey();
 
                         ///TODO Create a switch statement with the default GUIDS
-
-                        //orderRepository.TestToppings(new Guid("647297d3-c1b5-41b5-9b9a-168a32141bd9"));
                     }
                     else if(option=="C"||option == "c")
                     {

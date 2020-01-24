@@ -37,7 +37,12 @@ namespace PizzaBox.Domain.DataAccess.Repository
             }
 
         }
+        public decimal? GetCrustPrice(int id)
+        {
+            var topping = db.Crust.FirstOrDefault(e => e.Id == id);
 
+            return topping.Price;
+        }
 
         public IEnumerable<PizzaLib.Crust> PizzaReturn()
         {

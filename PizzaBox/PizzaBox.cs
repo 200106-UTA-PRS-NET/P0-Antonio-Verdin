@@ -256,6 +256,7 @@ namespace PizzaBox
                             try
                             {
                                 crust = Convert.ToInt16(Console.ReadLine());
+                               Total += crustrepository.GetCrustPrice(crust);
                                 int i = 3;
                                 int[] x = new int[5] { 1, 11, -1, -1, -1 };
                                 int z = 2;

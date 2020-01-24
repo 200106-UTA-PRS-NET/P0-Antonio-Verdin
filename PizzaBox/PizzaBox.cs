@@ -151,7 +151,7 @@ namespace PizzaBox
                         
                             try
                             {
-                                int[] x = new int[4];
+                                int[] x = new int[5] { 1, 11, -1, -1, -1 };
                                 Order order = new Order
                                 {
 
@@ -168,12 +168,16 @@ namespace PizzaBox
                                     {
                                         case 1:
                                             order.Crust = 3;
+                                            x[2] = 2;
+                                            
 
                                             break;
                                         case 2:
+                                            x[2] = 2;
                                             order.Crust = 2;
                                             break;
                                         case 3 :
+                                            x[2] = 2;
                                             order.Crust = 1;
                                             break;
                                         case 4:
@@ -186,12 +190,21 @@ namespace PizzaBox
                                             order.Crust = 1;
                                             break;
                                         case 7:
+                                            x[2] = 2;
+                                            x[3] = 3;
+                                            x[4] = 4;
                                             order.Crust = 3;
                                             break;
                                         case 8:
+                                            x[2] = 2;
+                                            x[3] = 3;
+                                            x[4] = 4;
                                             order.Crust = 2;
                                             break;
                                         case 9:
+                                            x[2] = 2;
+                                            x[3] = 3;
+                                            x[4] = 4;
                                             order.Crust = 1;
                                             break;
                                         case 0:

@@ -96,6 +96,15 @@ namespace PizzaBox
                     Console.Clear(); 
                     customerid = Convert.ToInt16(a);
                     customerid = customerRepository.PrintUser(customerid);
+                    if(customerid == 0)
+                    {
+                        Console.WriteLine("Here is you Order History");
+                        orderRepository.OrderHistory(Convert.ToInt16(a));
+                        Console.WriteLine("Press Any Key to return to return to the main menu");
+                        Console.ReadKey();
+                        Login_Screen();
+
+                    }
                 }
                 catch
                 {
@@ -106,7 +115,7 @@ namespace PizzaBox
                 }
 
             }
-            int z = orderRepository.GetNextOrderNumber();
+            int newordernum = orderRepository.GetNextOrderNumber();
             while (true)
             {
                 Console.WriteLine($"Please Select Your Option:\n(O)rder\n(V)iew Order History\n(X)Logout");
@@ -148,6 +157,7 @@ namespace PizzaBox
                                     Dateordered = DateTime.Now,
                                     Storeid = storeid,
                                     Customerid = customerid,
+                                    Ordercount = newordernum
 
                                 };
                                 int res = Convert.ToInt16(Console.ReadLine());
@@ -257,6 +267,7 @@ namespace PizzaBox
                                     Storeid = storeid,
                                     Crust = crust,
                                     Customerid = customerid,
+                                    Ordercount = newordernum
 
                                 };
                                 Console.WriteLine("Type 'yes' to order and confirm this pizza or press enter to return to the menu");

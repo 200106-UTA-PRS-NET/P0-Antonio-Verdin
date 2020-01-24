@@ -94,7 +94,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
             }
             foreach(var item in orderlist)
             {
-                Console.WriteLine($"Order #: {item.Ordercount}\tItem#{item.OrderNum} \tCost: { item.Ordercost}");
+                Console.WriteLine($"Order #: {item.Ordercount}\tItem#{item.OrderNum} \tCost: {String.Format("{0:c}", item.Ordercost)}");
                 PrintToppings(item.Orderuid);
 
             }
@@ -108,7 +108,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
             var query = db.Orders;
             if (db.Orders.Any(e => e.Storeid == storeid))
             {
-                var results = db.Orders.Where(s => s.Storeid == storeid);
+                var results = db.Orders.Where(s => s.Storeid == storeid).OrderBy(e=> e.Ordercount);
                 foreach (var item in results)
                 {
                     orderlist.Add(item);
@@ -124,7 +124,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
             }
             foreach (var item in orderlist)
             {
-                Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Orderuid} \tCost: { item.Ordercost}");
+                Console.WriteLine($"Order #: {item.Ordercount}\tItem#{item.OrderNum} \t{String.Format("{0:c}", item.Ordercost)}");
                 PrintToppings(item.Orderuid);
 
             }
@@ -160,21 +160,6 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 Console.WriteLine($"{topping.topping}");
                 cost += topping.price;
             }
-        }
-        public decimal? PizzaCost(int[] x, decimal crustprice)
-        {
-            decimal? cost = 0;
-            foreach (int i in x)
-            {
-                if (i > -1)
-                {
-                    var result = db.Toppings.Where(s => s.Id == i).Select(d=>d.Price) ;
-                    cost += result.ElementAt(0);
-                }
-            }
-
-            return cost;
-
         }
 
 

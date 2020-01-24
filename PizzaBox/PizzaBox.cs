@@ -134,9 +134,9 @@ namespace PizzaBox
                 }
                 else if (option == "o"|| option == "O")
                 {
-                    float Total = 5.0f;
+                    decimal? Total = 0;
                     int pizzacount = 1;
-                        while (Total < 250.00 && pizzacount <= 100)
+                        while (Total < 250 && pizzacount <= 100)
                         {
                         Console.Clear();
                         Console.WriteLine($"Your Total Cost is {String.Format("{0:c}",Total)}\n\nPlease Select Your Option\n(S)elect Pizza\nE(X)it\n(C)reate your own");
@@ -222,8 +222,9 @@ namespace PizzaBox
                                         order.OrderNum = pizzacount;
                                         customerRepository.OrderPizza(customerid);
                                         orderRepository.PizzaBoxAddOrder(order, x);
+                                        Total += order.Ordercost;
                                         pizzacount++;
-                                        Console.WriteLine("Here");
+                                        Console.WriteLine("Push any key Continue");
                                         Console.ReadLine();
                                     }
 
@@ -249,7 +250,7 @@ namespace PizzaBox
 
 
                             Console.Clear();
-                            Console.WriteLine($"Select Crust Type and Size\t\t\tYour Total Cost is{String.Format("{0:c}", Total)}");
+                            Console.WriteLine($"Select Crust Type and Size\t\t\t");
                             CrustRepository crustrepository = new CrustRepository(db);
                             crustrepository.PizzaPrint();
                             try
@@ -267,7 +268,7 @@ namespace PizzaBox
                                         crustrepository.ToppingPrint();
                                         string s = Console.ReadLine();
                                         x[z]= Convert.ToInt16(s);
-                                        if (s == "n" || s == "N")
+                                        if (s == "e" || s == "E")
                                         {
                                             i = 0;
                                         }
@@ -296,6 +297,7 @@ namespace PizzaBox
                                     order.OrderNum = pizzacount;
                                     customerRepository.OrderPizza(customerid);
                                     orderRepository.PizzaBoxAddOrder(order, x);
+                                    Total += order.Ordercost;
                                     pizzacount++;
                                 }
 

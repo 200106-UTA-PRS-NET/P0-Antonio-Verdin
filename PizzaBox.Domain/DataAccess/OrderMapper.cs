@@ -13,6 +13,7 @@
                 Customerid = orders.Customerid,
                 Storeid = orders.Storeid,
                 Crust = orders.Crust,
+                Ordercost = orders.Ordercost
                 };
             }
             public static Client.Models.Orders Map(PizzaLib.Order order)
@@ -25,7 +26,8 @@
                     Dateordered = order.Dateordered,
                     Crust = order.Crust,
                     Customerid = order.Customerid,
-                    Storeid = order.Storeid
+                    Storeid = order.Storeid,
+                    Ordercost = order.Ordercost
 
 
                 };

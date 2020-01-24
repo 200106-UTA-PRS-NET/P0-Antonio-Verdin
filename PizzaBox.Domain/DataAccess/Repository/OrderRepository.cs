@@ -28,6 +28,12 @@ namespace PizzaBox.Domain.DataAccess.Repository
         }
         public void PizzaBoxAddOrder(Order record, int[] x)
         {
+            decimal? cost = 0;
+            foreach (int i in x) {
+                var topping = db.Toppings.FirstOrDefault(e => e.Id == i);
+                     cost += topping.Price;
+                    }
+            record.Ordercost = cost;
             db.Orders.Add(OrderMapper.Map(record));// this will generate insert query
             db.SaveChanges();
             var result = db.Orders.OrderByDescending(p => p.Dateordered).FirstOrDefault().Orderuid;
@@ -40,6 +46,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
                     db.Pizzas.Add(new Pizzas { Topping = i, Orderid = result });
                     db.SaveChanges();
                 }
+                
             }
             
 
@@ -71,7 +78,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
             var query = db.Orders;
                 if (db.Orders.Any(e => e.Customerid == customerid)) 
             {
-                var results = db.Orders.Where(s => s.Customerid == customerid);
+                var results = db.Orders.Where(s => s.Customerid == customerid).OrderByDescending(e=> e.Ordercount);
                 foreach (var item in results)
                 {
                     orderlist.Add(item);
@@ -153,6 +160,21 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 Console.WriteLine($"{topping.topping}");
                 cost += topping.price;
             }
+        }
+        public decimal? PizzaCost(int[] x, decimal crustprice)
+        {
+            decimal? cost = 0;
+            foreach (int i in x)
+            {
+                if (i > -1)
+                {
+                    var result = db.Toppings.Where(s => s.Id == i).Select(d=>d.Price) ;
+                    cost += result.ElementAt(0);
+                }
+            }
+
+            return cost;
+
         }
 
 

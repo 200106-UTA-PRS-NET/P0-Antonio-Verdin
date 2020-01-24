@@ -292,7 +292,7 @@ namespace PizzaBox
                                 if (temp == "yes" || temp == "Yes")
                                 {
 
-                                    
+                                   // orderRepository.PizzaCost(x, 10);
                                     order.OrderNum = pizzacount;
                                     customerRepository.OrderPizza(customerid);
                                     orderRepository.PizzaBoxAddOrder(order, x);

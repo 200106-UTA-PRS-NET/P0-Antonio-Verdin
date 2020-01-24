@@ -20,8 +20,26 @@ namespace PizzaBox.Domain.DataAccess.Repository
         }
         public void PizzaBoxAdd(Order record)
         {
-            throw new NotImplementedException();
+             
+            db.Orders.Add(OrderMapper.Map(record));// this will generate insert query
+            db.SaveChanges();
+            var result = db.Orders.OrderByDescending(p => p.Dateordered).FirstOrDefault();
+            Console.WriteLine(result.Orderuid);
         }
+        public void PizzaBoxAddOrder(Order record, int[] x)
+        {
+            db.Orders.Add(OrderMapper.Map(record));// this will generate insert query
+            db.SaveChanges();
+            var result = db.Orders.OrderByDescending(p => p.Dateordered).FirstOrDefault().Orderuid;
+
+            db.Pizzas.Add(new Pizzas { Topping = 5, Orderid = result });
+            db.SaveChanges();
+
+            
+
+        }
+
+
 
         public void PizzaPrint()
         {
@@ -57,7 +75,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
             }
             foreach(var item in orderlist)
             {
-                Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Ordercount} \tCost: { item.Ordercost}");
+                Console.WriteLine($"Order #: {item.Ordercount}\tItem#{item.OrderNum} \tCost: { item.Ordercost}");
                 PrintToppings(item.Orderuid);
 
             }
@@ -81,7 +99,8 @@ namespace PizzaBox.Domain.DataAccess.Repository
                                   id = p.Orderid,
                                   topping = e.Topping,
                                   price = e.Price,
-                                  crust = d.Crust1
+                                  crust = d.Crust1,
+                                  crustprice = d.Price
 
                               }).ToList();
             

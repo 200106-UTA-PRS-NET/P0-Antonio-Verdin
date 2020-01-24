@@ -40,6 +40,13 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 }
             }
         }
+        public void OrderPizza(int customerid)
+        {
+            var cus = db.Customers.FirstOrDefault(e => e.Customerid == customerid);
+            cus.Lastorder = DateTime.Now;
+            db.SaveChanges();
+
+        }
         public int PrintUser(int customerid)
         {
             if (db.Customers.Any(e => e.Customerid == e.Customerid))

@@ -88,6 +88,7 @@ namespace PizzaBox
                     Console.WriteLine("Here is the order History: ");
                     orderRepository.StoreOrderHistory(storeid);
                     Console.ReadKey();
+                    Console.Clear();
                     Login_Screen();
                 }
                 try
@@ -105,6 +106,7 @@ namespace PizzaBox
                 }
 
             }
+            int z = orderRepository.GetNextOrderNumber();
             while (true)
             {
                 Console.WriteLine($"Please Select Your Option:\n(O)rder\n(V)iew Order History\n(X)Logout");
@@ -209,7 +211,7 @@ namespace PizzaBox
                             }
 
 
-                        ///TODO Create a switch statement with the default GUIDS
+                     
                     }
                     else if(option=="X"|| option == "x")
                         {

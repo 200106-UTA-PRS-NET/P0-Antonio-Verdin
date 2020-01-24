@@ -38,6 +38,11 @@ namespace PizzaBox.Domain.DataAccess.Repository
             
 
         }
+        public int GetNextOrderNumber()
+        {
+            int cus = db.Orders.Max(p => p.Ordercount).Value;
+            return (cus+1);
+        }
 
 
 
@@ -75,7 +80,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
             }
             foreach(var item in orderlist)
             {
-                Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Orderuid} \tCost: { item.Ordercost}");
+                Console.WriteLine($"Order #: {item.OrderNum}\tItem#{item.Ordercount} \tCost: { item.Ordercost}");
                 PrintToppings(item.Orderuid);
 
             }

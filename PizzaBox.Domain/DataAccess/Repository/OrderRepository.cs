@@ -32,9 +32,15 @@ namespace PizzaBox.Domain.DataAccess.Repository
             db.SaveChanges();
             var result = db.Orders.OrderByDescending(p => p.Dateordered).FirstOrDefault().Orderuid;
 
-            db.Pizzas.Add(new Pizzas { Topping = 5, Orderid = result });
-            db.SaveChanges();
 
+            foreach (int i in x)
+            {
+                if (i > -1)
+                {
+                    db.Pizzas.Add(new Pizzas { Topping = i, Orderid = result });
+                    db.SaveChanges();
+                }
+            }
             
 
         }
@@ -148,6 +154,7 @@ namespace PizzaBox.Domain.DataAccess.Repository
                 cost += topping.price;
             }
         }
+
 
         IEnumerable<Order> IPizzaRepositoryRead<Order>.PizzaReturn()
         {

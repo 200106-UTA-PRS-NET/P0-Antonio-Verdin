@@ -102,6 +102,7 @@ namespace PizzaBox
                         orderRepository.OrderHistory(Convert.ToInt16(a));
                         Console.WriteLine("Press Any Key to return to return to the main menu");
                         Console.ReadKey();
+                        Console.Clear();
                         Login_Screen();
 
                     }
@@ -242,7 +243,8 @@ namespace PizzaBox
                             {
                                 crust = Convert.ToInt16(Console.ReadLine());
                                 int i = 3;
-                                int[] x = new int[4];
+                                int[] x = new int[5] { 1, 11, -1, -1, -1 };
+                                int z = 2;
                                 Console.WriteLine($"Pizza Sauce and Cheese have been added choose up to {i} toppings");
 
                                 while (i > 0)
@@ -251,6 +253,7 @@ namespace PizzaBox
                                         Console.WriteLine($"Select your Toppings From the List (E)nd You have {i} Toppings left to Choose");
                                         crustrepository.ToppingPrint();
                                         string s = Console.ReadLine();
+                                        x[z]= Convert.ToInt16(s);
                                         if (s == "n" || s == "N")
                                         {
                                             i = 0;
@@ -258,6 +261,7 @@ namespace PizzaBox
 
                                     }
                                     i--;
+                                    z++;
                                 }
                                 
                                 Order order = new Order

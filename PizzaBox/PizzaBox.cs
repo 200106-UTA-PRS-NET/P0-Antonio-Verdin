@@ -1,326 +1,140 @@
-﻿using System.IO;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using PizzaBox.Client.Models;
-using PizzaBox.Domain.DataAccess.Repository;
+using PizzaBox.Domain.Controller;
+using PizzaBox.Models;
 using System;
-using PizzaBox.Domain.View;
-using PizzaBox.Domain.PizzaLib;
+using System.Collections.Generic;
+using System.IO;
+
+
 
 namespace PizzaBox
 {
     class PizzaBox
     {
-
         static void Main(string[] args)
         {
+            Console.WriteLine("Please enter your user number or R to register");
+            string userid = Console.ReadLine();
+            Console.WriteLine( "Please enter you password");
+            string pass = Console.ReadLine();
+            int usernum = 0;
+            try
+            {
+                if(userid == "r"|| userid== "R")
+                {
+                    Console.WriteLine("Please Enter your first name");
+                    string name = Console.ReadLine();
+                    Console.WriteLine("Pleae Enter your last name");
+                    string lname = Console.ReadLine();
+                    Console.WriteLine("Pleae Enter a Password");
+                    string password = Console.ReadLine();
+                    Console.WriteLine("Please Enter your City");
+                    string city = Console.ReadLine();
+                    Console.WriteLine("Please Enter Your Street number or Aptnum");
+                    string address = Console.ReadLine() ;
 
-            Login_Screen();
+                }
+               usernum = Int16.Parse(userid);
+                
+                
+            }catch { } 
+            UserController user = new UserController(ConnectDB(),usernum,pass);
+                       
+//ToDo logout if not authenticated
+            IEnumerable<Domain.Library.Store> stores = user.RetrieveListStores(ConnectDB());
+            Console.WriteLine("Please Select a Store from the List");
+            foreach (var item in stores)
+            {
+                
+                Console.WriteLine($"{item.StoreId}....\t{item.Name}\t {item.City}");
+            }
+            string temp = Console.ReadLine();
+            IEnumerable<Domain.Library.Orders> pastorders = user.GetOrdersbyUserId(ConnectDB());
+
+            
+            if (pastorders != null)
+            {
+                Console.WriteLine("Here are your past orders");
+
+                foreach (var item in pastorders)
+                {
+                    Console.WriteLine($"Order # { item.Id} on {item.orderdate} # {String.Format("{0:c}", item.TotalCost)} ");
+                }
+            }
+//to do flow control here          
+            Console.WriteLine("Would you like to (O)rder (Q)uit");
+            Console.ReadKey();
+            Console.Clear();
+            Orders order = new Orders();
+            Console.WriteLine("Would you like to Order a (C)ustom or (P)remade Pizza");
+            string menu = Console.ReadLine();
+            if (menu == "c" || menu == "C")
+            {
+                
+                IList<Domain.Library.Ingredients> listoftoppings = user.ListToppings(ConnectDB());
+                Console.WriteLine("First Please Choose your Crust");
+                foreach (Domain.Library.Ingredients topping in listoftoppings)
+                {
+                    if (topping.Type == "Crust")
+                    {
+                        Console.WriteLine($"{topping.Topping} cost {String.Format("{0:c}", topping.Price)}");
+                    }
+
+                }
+                Console.ReadLine();
+                Console.WriteLine("Next Choose your Favorite Sauce");
+                foreach (Domain.Library.Ingredients topping in listoftoppings)
+                {
+                    if (topping.Type == "Sauce")
+                    {
+                        Console.WriteLine($"{topping.Id}   {topping.Topping} cost {String.Format("{0:c}", topping.Price)}");
+                    }
+
+                }
+                Console.WriteLine("Finally Choose up to 5 other Toppings");
+                foreach (Domain.Library.Ingredients topping in listoftoppings)
+                {
+                    if (topping.Type == "Topping")
+                    {
+                        Console.WriteLine($"{topping.Id}   {topping.Topping} cost {String.Format("{0:c}", topping.Price)}");
+                    }
+
+                }
+                
+                Console.ReadKey();
+            }
+            else if(menu == "p" || menu == "P")
+            {
+
+            }
+            else
+            {
+
+            }
+
+
+
+
+
+
 
 
         }
         static PizzaBoxContext ConnectDB()
         {
-            var configBuilder = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("C:\\Users\\theki\\Documents\\Revature\\projects\\P0-Antonio-Verdin\\PizzaBox\\appsettings.json", optional: true, reloadOnChange: true);
-                    IConfigurationRoot configuration = configBuilder.Build();
+         var configBuilder = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("C:\\Users\\theki\\Documents\\Revature\\projects\\P0-Antonio-Verdin\\PizzaBox\\appsettings.json", optional: true, reloadOnChange: true);
+        IConfigurationRoot configuration = configBuilder.Build();
 
-                  var optionsBuilder = new DbContextOptionsBuilder<PizzaBoxContext>();
-                  optionsBuilder.UseSqlServer(configuration.GetConnectionString("PizzaBox" ));
+        var optionsBuilder = new DbContextOptionsBuilder<PizzaBoxContext>();
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("PizzaBox" ));
                   var options = optionsBuilder.Options;
-                  PizzaBoxContext db = new PizzaBoxContext(options);
+        PizzaBoxContext db = new PizzaBoxContext(options);
 
-                  return db;
-        }
-        static void Login_Screen()
-        {
-            PizzaBoxContext db = ConnectDB();
-            CustomerRepository customerRepository = new CustomerRepository(db);
-            OrderRepository orderRepository = new OrderRepository(db);
-            StoreRepository storeRepository = new StoreRepository(db);
-            TerminalView terminal = new TerminalView();
-            terminal.Terminal_Welcome();
-            int customerid=0;
-            int storeid = 0;
-            int crust = 0;
-            Domain.PizzaLib.Crust usercrust = new Domain.PizzaLib.Crust();
-            while (storeid == 0)
-            {
-                Console.WriteLine("Please select your Location");
-                storeRepository.PizzaPrint();
-                string a = Console.ReadLine();
-
-                try
-                {
-                    Console.Clear();
-                    storeid = Convert.ToInt16(a);
-                    storeRepository.PrintStores(storeid);
-                }
-                catch
-                {
-                   
-                    Console.WriteLine("Invaild Error! Press Any Key to continue");
-                    Console.ReadKey();
-                    Console.Clear();
-                    storeid = 0;
-                }
-            }
-            while (customerid == 0)
-            {
-
-                //Console.Clear();
-               Console.WriteLine("Enter Your User number or (R)egister");
-               string a = Console.ReadLine();
-                if(a=="R"||a=="r")
-                {
-                    Customer newcustomer = new Customer();
-                    Console.WriteLine("Register new user\nEnter your first name: ");
-                    newcustomer.Fname = Console.ReadLine();
-                    Console.WriteLine("\nEnter your Last name: ");
-                    newcustomer.Lname = Console.ReadLine();
-                    customerRepository.PizzaBoxAdd(newcustomer);
-                    Console.WriteLine("Enter Your User number: ");
-                    a = Console.ReadLine();
-                }
-                else if (a == "iddqd" || a == "IDDQD")
-                {
-                    Console.WriteLine("Here is the order History: ");
-                    orderRepository.StoreOrderHistory(storeid);
-                    Console.ReadKey();
-                    Console.Clear();
-                    Login_Screen();
-                }
-                try
-                {
-                    Console.Clear(); 
-                    customerid = Convert.ToInt16(a);
-                    customerid = customerRepository.PrintUser(customerid);
-                    if(customerid == 0)
-                    {
-                        Console.WriteLine("Here is you Order History");
-                        orderRepository.OrderHistory(Convert.ToInt16(a));
-                        Console.WriteLine("Press Any Key to return to return to the main menu");
-                        Console.ReadKey();
-                        Console.Clear();
-                        Login_Screen();
-
-                    }
-                }
-                catch
-                {
-                    Console.WriteLine(" Press Any Key to continue");
-                    Console.ReadKey();
-                    Console.Clear();
-                    customerid = 0;
-                }
-
-            }
-            int newordernum = orderRepository.GetNextOrderNumber();
-            while (true)
-            {
-                Console.WriteLine($"Please Select Your Option:\n(O)rder\n(V)iew Order History\n(X)Logout");
-                string option = Console.ReadLine();
-                if (option == "x" || option == "X")
-                {
-                    Console.Clear();
-                    Login_Screen();
-                    
-                }
-                else if (option == "v" || option == "V")
-                {
-                    orderRepository.OrderHistory(customerid);
-
-                }
-                else if (option == "o"|| option == "O")
-                {
-                    decimal? Total = 0;
-                    int pizzacount = 1;
-                        while (Total < 250 && pizzacount <= 100)
-                        {
-                        Console.Clear();
-                        Console.WriteLine($"Your Total Cost is {String.Format("{0:c}",Total)}\n\nPlease Select Your Option\n(S)elect Pizza\nE(X)it\n(C)reate your own");
-                        option = Console.ReadLine();
-                   
-                    if (option == "S" || option == "s")
-                    {
-                        Console.WriteLine("1. Large Pep Pizza\t 2. Medium Pep Pizza\t\t 3. Small Pep Pizza");
-                        Console.WriteLine("4. Large Cheese Pizza\t 5. Medium Cheese Pizza\t\t 6. Small Cheese Pizza");
-                        Console.WriteLine("7. Large 3Meat Pizza\t 8. Medium 3Meat Pizza\t\t 9. Small 3Meat Pizza");
-                        Console.WriteLine("\t0. Veggie Gluten Friendly Pizza\t E(X)it");
-                        
-                            try
-                            {
-                                int[] x = new int[5] { 1, 11, -1, -1, -1 };
-                                Order order = new Order
-                                {
-
-                                    Dateordered = DateTime.Now,
-                                    Storeid = storeid,
-                                    Customerid = customerid,
-                                    Ordercount = newordernum
-
-                                };
-                                int res = Convert.ToInt16(Console.ReadLine());
-                                if(res<9 && res >= 0)
-                                {
-                                    switch (res)
-                                    {
-                                        case 1:
-                                            order.Crust = 3;
-                                            x[2] = 2;
-                                            
-
-                                            break;
-                                        case 2:
-                                            x[2] = 2;
-                                            order.Crust = 2;
-                                            break;
-                                        case 3 :
-                                            x[2] = 2;
-                                            order.Crust = 1;
-                                            break;
-                                        case 4:
-                                            order.Crust = 3;
-                                            break;
-                                        case 5:
-                                            order.Crust = 2;
-                                            break;
-                                        case 6:
-                                            order.Crust = 1;
-                                            break;
-                                        case 7:
-                                            x[2] = 2;
-                                            x[3] = 3;
-                                            x[4] = 4;
-                                            order.Crust = 3;
-                                            break;
-                                        case 8:
-                                            x[2] = 2;
-                                            x[3] = 3;
-                                            x[4] = 4;
-                                            order.Crust = 2;
-                                            break;
-                                        case 9:
-                                            x[2] = 2;
-                                            x[3] = 3;
-                                            x[4] = 4;
-                                            order.Crust = 1;
-                                            break;
-                                        case 0:
-                                            order.Crust = 5;
-                                            break;
-
-
-                                    }
-
-                                    Console.WriteLine("Type 'yes' to order and confirm this pizza or press enter to return to the menu");
-                                    string temp = Console.ReadLine();
-                                    if (temp == "yes" || temp == "Yes")
-                                    {
-                                        
-                                        order.OrderNum = pizzacount;
-                                        customerRepository.OrderPizza(customerid);
-                                        orderRepository.PizzaBoxAddOrder(order, x);
-                                        Total += order.Ordercost;
-                                        pizzacount++;
-                                        Console.WriteLine("Push any key Continue");
-                                        Console.ReadLine();
-                                    }
-
-                                }
-                            }
-                            catch
-                            {
-                                Console.WriteLine("An error has occured going back to main menu");
-                            }
-
-
-                     
-                    }
-                    else if(option=="X"|| option == "x")
-                        {
-                            Console.WriteLine("Thank you for your buisness press any key to logout");
-                            Console.ReadKey();
-                            Console.Clear();
-                            Login_Screen();
-                        }
-                    else if(option=="C"||option == "c")
-                    {
-
-
-                            Console.Clear();
-                            Console.WriteLine($"Select Crust Type and Size\t\t\t");
-                            CrustRepository crustrepository = new CrustRepository(db);
-                            crustrepository.PizzaPrint();
-                            try
-                            {
-                                crust = Convert.ToInt16(Console.ReadLine());
-                               Total += crustrepository.GetCrustPrice(crust);
-                                int i = 3;
-                                int[] x = new int[5] { 1, 11, -1, -1, -1 };
-                                int z = 2;
-                                Console.WriteLine($"Pizza Sauce and Cheese have been added choose up to {i} toppings");
-
-                                while (i > 0)
-                                {
-                                    {
-                                        Console.WriteLine($"Select your Toppings From the List (E)nd You have {i} Toppings left to Choose");
-                                        crustrepository.ToppingPrint();
-                                        string s = Console.ReadLine();
-                                        x[z]= Convert.ToInt16(s);
-                                        if (s == "e" || s == "E")
-                                        {
-                                            i = 0;
-                                        }
-
-                                    }
-                                    i--;
-                                    z++;
-                                }
-                                
-                                Order order = new Order
-                                {
-
-                                    Dateordered = DateTime.Now,
-                                    Storeid = storeid,
-                                    Crust = crust,
-                                    Customerid = customerid,
-                                    Ordercount = newordernum
-
-                                };
-                                Console.WriteLine("Type 'yes' to order and confirm this pizza or press enter to return to the menu");
-                                string temp = Console.ReadLine();
-                                if (temp == "yes" || temp == "Yes")
-                                {
-
-                                   // orderRepository.PizzaCost(x, 10);
-                                    order.OrderNum = pizzacount;
-                                    customerRepository.OrderPizza(customerid);
-                                    orderRepository.PizzaBoxAddOrder(order, x);
-                                    Total += order.Ordercost;
-                                    pizzacount++;
-                                }
-
-
-                            }
-
-                            catch
-                            {
-                                Console.WriteLine("Error in input");
-                                Console.WriteLine("Press any key to continue");
-                                Console.ReadLine();
-                                Console.Clear();
-                            }
-
-                        }
-                    }
-                }
-            }
-
-
+         return db;
         }
 
-        
-    }
+}
 }
